@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider = "sqlserver"
-  url      = env("DATABASE_URL") // bd Azure
-  // url = env("LOCALDATABASE_URL") // bd Local
+  // url      = env("DATABASE_URL") // bd Azure
+  url = env("LOCALDATABASE_URL") // bd Local
 }
 
 model Fund {
@@ -22,7 +22,7 @@ model Fund {
   supportType           String
   organizations         Organization[] @relation("fund_organization")
   sector                Sector[]       @relation("fund_sector")
-  requiresPartner       Boolean?
+  requiresPartner       String
   partnerType           PartnerType[]  @relation("fund_partner")
   TRLmin                String
   TRLmax                String
@@ -31,11 +31,9 @@ model Fund {
   objective             String?
   elegibility           String?
   expenses              String?
-  currency              String         @default("BRL")
-  minValueReembolsaveis String
-  maxValueReembolsaveis String
-  minValueSubvencao     String
-  maxValueSubvencao     String
+  currency              String
+  minValue              String
+  maxValue              String
   supportTax            String
   duration              String
   tax                   String
