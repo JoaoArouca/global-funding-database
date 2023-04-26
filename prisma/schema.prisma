@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider = "sqlserver"
-  // url      = env("DATABASE_URL") // bd Azure
-  url = env("LOCALDATABASE_URL") // bd Local
+  url      = env("DATABASE_URL") // bd Azure
+  // url = env("LOCALDATABASE_URL") // bd Local
 }
 
 model Fund {
