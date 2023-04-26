@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL") // bd Azure
+  // url = env("LOCALDATABASE_URL") // bd Local
+}
+
+model Fund {
+  id                    String         @id @default(uuid())
+  title                 String         @unique
+  countries             Country[]      @relation("fund_country")
+  region                Region[]       @relation("fund_region")
+  institution           String
+  program               String?
+  call                  String?
+  supportType           String
+  organizations         Organization[] @relation("fund_organization")
+  sector                Sector[]       @relation("fund_sector")
+  requiresPartner       Boolean?
+  partnerType           PartnerType[]  @relation("fund_partner")
+  TRLmin                String
+  TRLmax                String
+  technologies          Technology[]   @relation("fund_technology")
+  term                  String
+  objective             String?
+  elegibility           String?
+  expenses              String?
+  currency              String         @default("BRL")
+  minValueReembolsaveis String
+  maxValueReembolsaveis String
+  minValueSubvencao     String
+  maxValueSubvencao     String
+  supportTax            String
+  duration              String
+  tax                   String
+  shortage              String
+  amortization          String
+  isESG                 Boolean        @default(false)
+  link                  String
+  status                String
+  lastRelease           String
+  observation           String?
+
+  @@map("fund")
+}
+
+model Country {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_country")
+}
+
+model Region {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_region")
+}
+
+model Organization {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_organization")
+}
+
+model Sector {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_sector")
+}
+
+model PartnerType {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_partner")
+}
+
+model Technology {
+  id    String @id @default(uuid())
+  name  String
+  funds Fund[] @relation("fund_technology")
+}
